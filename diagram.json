@@ -17,6 +17,14 @@
       "top": 159.8,
       "left": -105.6,
       "attrs": { "color": "green", "xray": "1" }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": 131.7,
+      "left": 148.5,
+      "rotate": 90,
+      "attrs": { "volume": "0.1" }
     }
   ],
   "connections": [
@@ -25,7 +33,9 @@
     [ "led1:A", "esp:12", "green", [ "v0" ] ],
     [ "led1:C", "esp:GND.1", "black", [ "v0" ] ],
     [ "btn1:1.r", "esp:27", "orange", [ "h19.4", "v-48" ] ],
-    [ "btn1:2.r", "esp:GND.1", "black", [ "h29", "v-38.2" ] ]
+    [ "btn1:2.r", "esp:GND.1", "black", [ "h29", "v-38.2" ] ],
+    [ "bz1:2", "esp:15", "gold", [ "v-0.4", "h-43.24" ] ],
+    [ "bz1:1", "esp:GND.3", "black", [ "h-19.2", "v-76.8" ] ]
   ],
   "dependencies": {}
 }
