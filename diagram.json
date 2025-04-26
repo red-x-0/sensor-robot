@@ -9,8 +9,14 @@
       "top": 0,
       "left": 0,
       "attrs": { "env": "micropython-20231227-v1.22.0" }
-    }
+    },
+    { "type": "wokwi-led", "id": "led1", "top": 92.4, "left": -53.8, "attrs": { "color": "red" } }
   ],
-  "connections": [ [ "esp:TX", "$serialMonitor:RX", "", [] ], [ "esp:RX", "$serialMonitor:TX", "", [] ] ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "led1:A", "esp:12", "green", [ "v0" ] ],
+    [ "led1:C", "esp:GND.1", "black", [ "v0" ] ]
+  ],
   "dependencies": {}
 }

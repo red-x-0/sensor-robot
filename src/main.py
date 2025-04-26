@@ -1,18 +1,11 @@
-from machine import Pin, I2C
-from oled import OLED
-from mpu6050 import accel
-from ultrasonic import HCSR04
-from buzzer import Buzzer
-from stepper import Stepper
+from machine import Pin
+
+led = Pin(12, Pin.OUT)
 
 def main():
+  led.value(0)
   while True:
     pass
 
 if __name__ == "__main__":
   main()
-
-
-
-
-
