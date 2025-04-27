@@ -1,6 +1,10 @@
 from machine import Pin
 from time import sleep
 from buzzer import Buzzer
+from stepper import Stepper
+
+left_motor = Stepper([13])
+right_motor = Stepper([19])
 
 led = Pin(12, Pin.OUT)
 
