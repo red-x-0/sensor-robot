@@ -30,7 +30,11 @@ def main():
   while True:
     wait_button_press()
     print("Button pressed")
-    sleep(1)
+    
+    distance_cm = ultrasonic.get_distance_cm()
+    print(distance_cm)
+
+    motor_controller.move_cm(distance_cm, 0.005)
 
 if __name__ == "__main__":
   main()
