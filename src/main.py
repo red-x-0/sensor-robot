@@ -24,6 +24,10 @@ buzzer = Buzzer(buzzerPin)
 def wait_button_press():
   while button.value() == 1:
     pass
+def get_steps_from_distance(distance_cm):
+  steps_per_cm = 200 / (2 * 3.1416 * 3)  # precalculate for fast access
+  steps = int(distance_cm * steps_per_cm)
+  return steps
 
 def main():
   led.value(0)
@@ -33,8 +37,10 @@ def main():
     
     distance_cm = ultrasonic.get_distance_cm()
     print(distance_cm)
+    
+    steps_to_move = get_steps_from_distance(distance_cm)
 
-    motor_controller.move_cm(distance_cm, 0.005)
+    motor_controller.move_cm(steps_to_move, 0.005)
 
 if __name__ == "__main__":
   main()
