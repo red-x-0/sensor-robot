@@ -2,6 +2,12 @@ from machine import Pin
 from time import sleep
 from buzzer import Buzzer
 from stepper import Stepper
+from ultrasonic import HCSR04
+
+trigger_pin=5
+echo_pin=18
+
+ultrasonic = HCSR04(trigger_pin, echo_pin)
 
 left_motor = Stepper([13])
 right_motor = Stepper([19])
