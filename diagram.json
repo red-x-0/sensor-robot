@@ -10,7 +10,7 @@
       "left": 0,
       "attrs": { "env": "micropython-20231227-v1.22.0" }
     },
-    { "type": "wokwi-led", "id": "led1", "top": 92.4, "left": -53.8, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led1", "top": 92.4, "left": -63.4, "attrs": { "color": "red" } },
     {
       "type": "wokwi-pushbutton",
       "id": "btn1",
@@ -25,6 +25,36 @@
       "left": 148.5,
       "rotate": 90,
       "attrs": { "volume": "0.1" }
+    },
+    { "type": "wokwi-a4988", "id": "drv1", "top": 52.8, "left": 168, "attrs": {} },
+    { "type": "wokwi-a4988", "id": "drv2", "top": -91.2, "left": 168, "attrs": {} },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper1",
+      "top": -172.81,
+      "left": 262.62,
+      "attrs": { "size": "8", "arrow": "orange" }
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper2",
+      "top": -28.81,
+      "left": 262.62,
+      "attrs": { "size": "8", "arrow": "orange" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text1",
+      "top": -153.6,
+      "left": 192,
+      "attrs": { "text": "Left" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text2",
+      "top": 9.6,
+      "left": 182.4,
+      "attrs": { "text": "Right\n" }
     }
   ],
   "connections": [
@@ -32,10 +62,23 @@
     [ "esp:RX", "$serialMonitor:TX", "", [] ],
     [ "led1:A", "esp:12", "green", [ "v0" ] ],
     [ "led1:C", "esp:GND.1", "black", [ "v0" ] ],
-    [ "btn1:1.r", "esp:27", "orange", [ "h19.4", "v-48" ] ],
-    [ "btn1:2.r", "esp:GND.1", "black", [ "h29", "v-38.2" ] ],
+    [ "btn1:1.r", "esp:27", "orange", [ "h9.8", "v-48" ] ],
+    [ "btn1:2.r", "esp:GND.1", "black", [ "h19.4", "v-38.2" ] ],
     [ "bz1:2", "esp:15", "gold", [ "v-0.4", "h-43.24" ] ],
-    [ "bz1:1", "esp:GND.3", "black", [ "h-19.2", "v-76.8" ] ]
+    [ "bz1:1", "esp:GND.3", "black", [ "h-19.2", "v-76.8" ] ],
+    [ "stepper2:A-", "drv1:2B", "green", [ "v0" ] ],
+    [ "drv1:2A", "stepper2:A+", "green", [ "h0" ] ],
+    [ "drv1:1A", "stepper2:B+", "green", [ "h0" ] ],
+    [ "drv1:1B", "stepper2:B-", "green", [ "h0" ] ],
+    [ "drv1:GND.1", "esp:GND.3", "black", [ "v0.08", "h19.35", "v9.6", "h-105.6", "v-57.6" ] ],
+    [ "drv2:1B", "stepper1:B-", "green", [ "h0" ] ],
+    [ "drv2:1A", "stepper1:B+", "green", [ "h0" ] ],
+    [ "drv2:2A", "stepper1:A+", "green", [ "h0" ] ],
+    [ "drv2:2B", "stepper1:A-", "green", [ "h0" ] ],
+    [ "drv2:SLEEP", "drv2:RESET", "green", [ "h-9.6", "v-9.6" ] ],
+    [ "drv1:SLEEP", "drv1:RESET", "green", [ "h-9.6", "v-9.6" ] ],
+    [ "drv1:STEP", "esp:19", "green", [ "h-57.6", "v-19.2" ] ],
+    [ "drv2:STEP", "esp:13", "green", [ "h-182.4", "v48", "h-105.6", "v192", "h105.6", "v-9.6" ] ]
   ],
   "dependencies": {}
 }
