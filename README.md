@@ -1,6 +1,7 @@
 # 🚀 Sensor Robot Project
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Embedded%20System-Yes-yellow.svg" alt="Embedded System Badge">
   <img src="https://img.shields.io/badge/MicroPython-Enabled-blue.svg" alt="MicroPython Badge">
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License Badge">
   <img src="https://img.shields.io/badge/Platform-Wokwi-ff69b4.svg" alt="Wokwi Badge">
