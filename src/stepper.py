@@ -79,3 +79,9 @@ class Stepper:
         """
         steps = int(revolutions * self.steps_per_revolution)
         self.step(steps, delay)
+    
+    def stop(self):
+        """
+        Stop motor
+        """
+        self.step_pin.off()
