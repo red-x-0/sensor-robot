@@ -14,7 +14,7 @@ oled_width = 128
 oled_height = 64
 oled = oled.SSD1306_I2C(oled_width, oled_height, i2c)
 
-oled.clear()
+oled.fill(0)
 oled.text("loading...", 22, 20)
 oled.show()
 
@@ -46,15 +46,33 @@ def get_steps_from_distance(distance_cm):
 def main():
   led.value(0)
   while True:
+    oled.fill(0)
+    oled.text("Press button", 15, 20)
+    oled.text("to start", 27, 35)
+    oled.show()
+
     wait_button_press()
     print("Button pressed")
-    
+
+    buzzer.beep_once()
+
     distance_cm = ultrasonic.get_distance_cm()
     print(distance_cm)
     
+    oled.fill(0)
+    oled.text("Moving {:.2f}cm".format(distance_cm), 7, 20)
+    oled.show()
+
     steps_to_move = get_steps_from_distance(distance_cm)
 
     motor_controller.move_steps(steps_to_move, 0.005)
+
+    buzzer.beep_once()
+
+    oled.fill(0)
+    oled.text("Reached", 20, 20)
+    oled.show()
+    sleep(0.5)
 
 if __name__ == "__main__":
   main()
