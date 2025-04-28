@@ -50,7 +50,7 @@ def main():
     
     steps_to_move = get_steps_from_distance(distance_cm)
 
-    motor_controller.move_cm(steps_to_move, 0.005)
+    motor_controller.move_steps(steps_to_move, 0.005)
 
 if __name__ == "__main__":
   main()

@@ -3,7 +3,7 @@ class MotorController:
         self.left = left_motor
         self.right = right_motor
 
-    def move_cm(self, steps, delay=0.001):
+    def move_steps(self, steps, delay=0.001):
         """Move the robot forward."""
 
         for _ in range(abs(steps)):
