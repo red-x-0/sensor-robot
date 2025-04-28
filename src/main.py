@@ -46,6 +46,26 @@ def get_steps_from_distance(distance_cm):
   steps = int(distance_cm * steps_per_cm)
   return steps
 
+def read_sensor_data():
+    """Read and return formatted sensor data"""
+    values = mpu.get_values()
+    
+    # Process accelerometer data (in g)
+    accel = {
+        'x': values["AcX"] / 16384.0,
+        'y': values["AcY"] / 16384.0,
+        'z': values["AcZ"] / 16384.0
+    }
+    
+    # Process gyroscope data (in °/sec)
+    gyro = {
+        'x': values["GyX"] / 131.0,
+        'y': values["GyY"] / 131.0,
+        'z': values["GyZ"] / 131.0
+    }
+    
+    return accel, gyro
+
 def main():
   led.value(0)
   while True:
