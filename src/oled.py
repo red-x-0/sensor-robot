@@ -101,7 +101,7 @@ class OLED:
     def text(self, string, x, y, col=1):
         self.framebuf.text(string, x, y * 10, col)
 
-class I2C(OLED):
+class SSD1306_I2C(OLED):
     def __init__(self, width, height, i2c, addr=0x3c, external_vcc=False):
         self.i2c = i2c
         self.addr = addr
@@ -129,7 +129,7 @@ class I2C(OLED):
     def poweron(self):
         pass
 
-class SPI(OLED):
+class SSD1306_SPI(OLED):
     def __init__(self, width, height, spi, dc, res, cs, external_vcc=False):
         self.rate = 10  *1024*  1024
         dc.init(dc.OUT, value=0)
