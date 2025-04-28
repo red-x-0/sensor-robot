@@ -5,9 +5,12 @@ from stepper import Stepper
 from ultrasonic import HCSR04
 from motor import MotorController
 import oled
+import mpu6050
 
 # I2C setup
 i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400000)
+
+mpu = mpu6050.accel(i2c)
 
 # OLED setup
 oled_width = 128

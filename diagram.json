@@ -65,7 +65,7 @@
       "top": 307.7,
       "left": 246.9,
       "rotate": 180,
-      "attrs": { "distance": "47" }
+      "attrs": { "distance": "13" }
     },
     {
       "type": "board-ssd1306",
@@ -73,7 +73,8 @@
       "top": 300.74,
       "left": 441.83,
       "attrs": { "i2cAddress": "0x3c" }
-    }
+    },
+    { "type": "wokwi-mpu6050", "id": "imu1", "top": 301.42, "left": 568.72, "attrs": {} }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
@@ -129,7 +130,19 @@
     [ "ultrasonic1:VCC", "bb1:25t.d", "", [ "$bb" ] ],
     [ "ultrasonic1:TRIG", "bb1:24t.d", "", [ "$bb" ] ],
     [ "ultrasonic1:ECHO", "bb1:23t.d", "", [ "$bb" ] ],
-    [ "ultrasonic1:GND", "bb1:22t.d", "", [ "$bb" ] ]
+    [ "ultrasonic1:GND", "bb1:22t.d", "", [ "$bb" ] ],
+    [ "imu1:INT", "bb2:15t.d", "", [ "$bb" ] ],
+    [ "imu1:AD0", "bb2:16t.d", "", [ "$bb" ] ],
+    [ "imu1:XCL", "bb2:17t.d", "", [ "$bb" ] ],
+    [ "imu1:XDA", "bb2:18t.d", "", [ "$bb" ] ],
+    [ "imu1:SDA", "bb2:19t.d", "", [ "$bb" ] ],
+    [ "imu1:SCL", "bb2:20t.d", "", [ "$bb" ] ],
+    [ "imu1:GND", "bb2:21t.d", "", [ "$bb" ] ],
+    [ "imu1:VCC", "bb2:22t.d", "", [ "$bb" ] ],
+    [ "bb2:21t.a", "bb2:tn.17", "black", [ "v0" ] ],
+    [ "bb2:22t.a", "bb2:tp.18", "red", [ "v0" ] ],
+    [ "bb2:20t.b", "bb2:7t.b", "green", [ "v0" ] ],
+    [ "bb2:19t.c", "bb2:8t.c", "green", [ "v0" ] ]
   ],
   "dependencies": {}
 }
