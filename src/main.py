@@ -4,7 +4,7 @@ from buzzer import Buzzer
 from stepper import Stepper
 from ultrasonic import HCSR04
 from motor import MotorController
-from oled import SSD1306_I2C
+import oled
 
 # I2C setup
 i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400000)
@@ -12,7 +12,11 @@ i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400000)
 # OLED setup
 oled_width = 128
 oled_height = 64
-oled = SSD1306_I2C(oled_width, oled_height, i2c)
+oled = oled.SSD1306_I2C(oled_width, oled_height, i2c)
+
+oled.clear()
+oled.text("loading...", 22, 20)
+oled.show()
 
 trigger_pin=5
 echo_pin=18
