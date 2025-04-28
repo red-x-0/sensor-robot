@@ -3,99 +3,98 @@ from time import sleep
 from buzzer import Buzzer
 from stepper import Stepper
 from ultrasonic import HCSR04
-from motor import MotorController
 import oled
 import mpu6050
 
 # I2C setup
 i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400000)
 
+# Initialize devices
 mpu = mpu6050.accel(i2c)
-
-# OLED setup
 oled_width = 128
 oled_height = 64
 oled = oled.SSD1306_I2C(oled_width, oled_height, i2c)
 
-oled.fill(0)
-oled.text("loading...", 22, 20)
-oled.show()
-
-trigger_pin=5
-echo_pin=18
-
+trigger_pin = 5
+echo_pin = 18
 ultrasonic = HCSR04(trigger_pin, echo_pin)
 
 left_motor = Stepper([13])
 right_motor = Stepper([19])
-motor_controller = MotorController(left_motor, right_motor)
 
 led = Pin(12, Pin.OUT)
-
 button = Pin(27, Pin.IN, Pin.PULL_UP)
+buzzer = Buzzer(15)
 
-buzzerPin = 15
-buzzer = Buzzer(buzzerPin)
-
+# --- Utility functions ---
 def wait_button_press():
-  while button.value() == 1:
-    pass
-  
+    while button.value() == 1:
+        pass  # Block until button is pressed
+
 def get_steps_from_distance(distance_cm):
-  steps_per_cm = 200 / (2 * 3.1416 * 3)  # precalculate for fast access
-  steps = int(distance_cm * steps_per_cm)
-  return steps
+    steps_per_cm = 200 / (2 * 3.1416 * 3)  # Precalculate steps per cm
+    steps = int(distance_cm * steps_per_cm)
+    return steps
 
-def read_sensor_data():
-    """Read and return formatted sensor data"""
-    values = mpu.get_values()
-    
-    # Process accelerometer data (in g)
-    accel = {
-        'x': values["AcX"] / 16384.0,
-        'y': values["AcY"] / 16384.0,
-        'z': values["AcZ"] / 16384.0
-    }
-    
-    # Process gyroscope data (in °/sec)
-    gyro = {
-        'x': values["GyX"] / 131.0,
-        'y': values["GyY"] / 131.0,
-        'z': values["GyZ"] / 131.0
-    }
-    
-    return accel, gyro
-
+# --- Main program ---
 def main():
-  led.value(0)
-  while True:
-    oled.fill(0)
-    oled.text("Press button", 15, 20)
-    oled.text("to start", 27, 35)
-    oled.show()
+    while True:
+        led.value(0)  # 2. Start by turning LED off
 
-    wait_button_press()
-    print("Button pressed")
+        oled.fill(0)  # 3. Clear OLED and show message
+        oled.text("Press button", 15, 20)
+        oled.text("to start", 27, 35)
+        oled.show()
 
-    buzzer.beep_once()
+        wait_button_press()  # 4. Wait for button press
 
-    distance_cm = ultrasonic.get_distance_cm()
-    print(distance_cm)
-    
-    oled.fill(0)
-    oled.text("Moving {:.2f}cm".format(distance_cm), 7, 20)
-    oled.show()
+        buzzer.beep_once()  # 5. Beep once after press
 
-    steps_to_move = get_steps_from_distance(distance_cm)
+        distance_cm = ultrasonic.get_distance_cm()  # 6. Read ultrasonic distance
 
-    motor_controller.move_steps(steps_to_move, 0.005)
+        steps = get_steps_from_distance(distance_cm)  # 7. Convert distance to steps
 
-    buzzer.beep_once()
+        # 8. Show distance and steps on OLED
+        oled.fill(0)
+        oled.text("{:.2f}cm".format(distance_cm), 10, 20)
+        oled.text("{} steps".format(steps), 10, 40)
+        oled.show()
+        sleep(1)
 
-    oled.fill(0)
-    oled.text("Reached", 20, 20)
-    oled.show()
-    sleep(0.5)
+        reached = True  # 9. Assume we will reach
+
+        # 10. Move steps
+        for _ in range(steps):
+            left_motor.move_one_step()
+            right_motor.move_one_step()
+            sleep(0.005)  # Small delay for stability
+
+            # 12. After each step, read accelerometer
+            values = mpu.get_values()
+            y_axis = values["AcY"]
+
+            # 13. Check tilt conditions
+            if y_axis > 12000 or y_axis < -12000:
+                reached = False  # 14. Mark not reached
+                break  # Exit movement immediately
+
+        if reached:
+            # 15. Reached successfully
+            oled.fill(0)
+            oled.text("REACHED", 30, 30)
+            oled.show()
+            buzzer.beep_once()
+        else:
+            # 15. Tilt detected
+            led.value(1)
+            oled.fill(0)
+            oled.text("TILTED", 30, 30)
+            oled.show()
+            for _ in range(3):
+                buzzer.beep_once()
+                sleep(0.2)
+
+        sleep(2)  # 16. Wait 2 seconds for user to read
 
 if __name__ == "__main__":
-  main()
+    main()
