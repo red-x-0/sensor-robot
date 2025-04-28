@@ -1,5 +1,5 @@
 from time import sleep
-from machine import PWM, Pin  # type: ignore
+from machine import PWM, Pin
 
 class Buzzer:
     def __init__(self, pin):
