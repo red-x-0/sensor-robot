@@ -48,6 +48,8 @@ def main():
 
         wait_button_press()  # 4. Wait for button press
 
+        led.value(1)  # Turn LED ON after button press
+
         buzzer.beep_once()  # 5. Beep once after press
 
         distance_cm = ultrasonic.get_distance_cm()  # 6. Read ultrasonic distance
