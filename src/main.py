@@ -1,9 +1,18 @@
-from machine import Pin
+from machine import Pin, I2C
 from time import sleep
 from buzzer import Buzzer
 from stepper import Stepper
 from ultrasonic import HCSR04
 from motor import MotorController
+from oled import SSD1306_I2C
+
+# I2C setup
+i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400000)
+
+# OLED setup
+oled_width = 128
+oled_height = 64
+oled = SSD1306_I2C(oled_width, oled_height, i2c)
 
 trigger_pin=5
 echo_pin=18
@@ -24,6 +33,7 @@ buzzer = Buzzer(buzzerPin)
 def wait_button_press():
   while button.value() == 1:
     pass
+  
 def get_steps_from_distance(distance_cm):
   steps_per_cm = 200 / (2 * 3.1416 * 3)  # precalculate for fast access
   steps = int(distance_cm * steps_per_cm)
