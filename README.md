@@ -121,3 +121,8 @@ Make sure the filenames match exactly! Wokwi depends on proper file naming for i
 
 ### MIT License
 
+---
+
+## Centemeter to Steps
+
+### You can find the additional criteria for converting Centemeter to Steps in cmToSteps.txt file

@@ -1,0 +1,6 @@
+Distance (cm) | Steps Needed
+10 cm | 106 steps
+20 cm | 212 steps
+30 cm | 318 steps
+50 cm | 531 steps
+100 cm | 1061 steps
